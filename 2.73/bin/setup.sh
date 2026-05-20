@@ -14,15 +14,15 @@ awk -v base=$BASE '{gsub(/\$\{BASE\}/,base);}1' \
 chmod -R a+rwx $BASE/bin/service
 
 rm -f /service/dbus-acload-prioritize
-ln -s $BASE/bin/service /service/dbus-acload-prioritize
+ln -s $BASE/bin/service /service/dbus-acload-prioritize &
 
-CMD="ln -s $BASE/bin/service /service/dbus-acload-prioritize"
+CMD="ln -s $BASE/bin/service /service/dbus-acload-prioritize &"
 if ! grep -q "$CMD" /data/rc.local; then
     echo "$CMD" >> /data/rc.local
 fi
 
 # -------------------------------
-# Enable IP forwarding (Tailscale subnet routing)
+# Enable IP forwarding
 # -------------------------------
 IPFWD_CMD="echo 1 > /proc/sys/net/ipv4/ip_forward"
 
